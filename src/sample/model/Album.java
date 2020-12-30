@@ -1,31 +1,40 @@
 package sample.model;
 
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
+
 public class Album {
-    private int id;
-    private String name;
-    private int artistsId;
+    private SimpleIntegerProperty id;
+    private SimpleStringProperty name;
+    private SimpleIntegerProperty artistsId;
+
+    public Album() {
+        this.id = new SimpleIntegerProperty();
+        this.name = new SimpleStringProperty();
+        this.artistsId = new SimpleIntegerProperty();
+    }
 
     public int getId() {
-        return id;
+        return id.get();
     }
 
     public void setId(int id) {
-        this.id = id;
+        this.id.set(id);
     }
 
     public String getName() {
-        return name;
+        return name.get();
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.name.set(name);
     }
 
     public int getArtistsId() {
-        return artistsId;
+        return artistsId.get();
     }
 
     public void setArtistsId(int artistsId) {
-        this.artistsId = artistsId;
+        this.artistsId.set(artistsId);
     }
 }

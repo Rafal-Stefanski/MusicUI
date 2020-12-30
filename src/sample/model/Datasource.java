@@ -207,7 +207,7 @@ public class Datasource {
             }
         }
 
-        System.out.println("SQL Statement = " + sb.toString());
+//        System.out.println("SQL Statement = " + sb.toString());
 
         try (Statement statement = conn.createStatement();
              ResultSet results = statement.executeQuery(sb.toString())) {
@@ -222,6 +222,27 @@ public class Datasource {
 
             return artists;
 
+        } catch (SQLException e) {
+            System.out.println("Query failed: " + e.getMessage());
+            return null;
+        }
+    }
+
+    public List<Album> queryAlbumsForArtistId(int id) {
+        try {
+            queryAlbumsByArtistId.setInt(1, id);
+            ResultSet results = queryAlbumsByArtistId.executeQuery();
+
+            List<Album> albums = new ArrayList<>();
+            while (results.next()) {
+                Album album = new Album();
+                album.setId(results.getInt(1));
+                album.setName(results.getString(2));
+                album.setArtistsId(id);
+                albums.add(album);
+            }
+
+            return albums;
         } catch (SQLException e) {
             System.out.println("Query failed: " + e.getMessage());
             return null;
@@ -355,8 +376,8 @@ public class Datasource {
             }
         }
     }
-    
-    public void insertSong(String title, String artist, String album, int track){
+
+    public void insertSong(String title, String artist, String album, int track) {
 
         try {
             conn.setAutoCommit(false);
